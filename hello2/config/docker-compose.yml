@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: hello_dev
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - hello_network
+
+  web:
+    build: .
+    environment:
+      DATABASE_URL: "ecto://postgres:postgres@db/hello_dev"
+      SECRET_KEY_BASE: "wz88FUm87Aak/BLFQwUQ7bwlYJDd75aEgF+M1jiGrci6gefJ7PqtaHSlwOMC8ttd"
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
+    networks:
+      - hello_network
+
+networks:
+  hello_network:
+
+volumes:
+  postgres_data:

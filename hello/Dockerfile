@@ -1,4 +1,3 @@
-# Use the official Elixir image
 FROM elixir:latest
 
 # Install Hex and Rebar
